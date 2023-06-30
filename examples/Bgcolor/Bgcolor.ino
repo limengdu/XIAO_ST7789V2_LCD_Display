@@ -1,13 +1,13 @@
 #include <st7789v2.h>
 #include "SPI.h"
 
-st7789v2 Display;
+st7789v2 lcd;
 
 void setup() {
   // put your setup code here, to run once:
-  Display.LCD_Init();
-  Display.LCD_SetBacklight(100);
-  Display.LCD_Clear(0xF800);
+  lcd.Init();
+  lcd.SetBacklight(100);
+  lcd.Clear(0xF800);
 }
 
 void loop() {
