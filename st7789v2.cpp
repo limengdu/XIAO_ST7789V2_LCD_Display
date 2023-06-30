@@ -126,7 +126,7 @@ void st7789v2::LCD_WriteReg(uint8_t data) {
     digitalWrite(spi_cs, HIGH);
 }
 
-void st7789v2::LCD_WriteData_Byte(uint8_t data) { 
+void st7789v2::LCD_WriteData_Byte(uint8_t data) {
     digitalWrite(spi_cs, LOW);
     digitalWrite(spi_dc, HIGH);
     SPI.transfer(data);
@@ -176,37 +176,37 @@ parameter :
     Yend  :   End uint16_t coordinatesen
 ******************************************************************************/
 void st7789v2::LCD_SetCursor(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend) {
-  if (horizontal) {
-    // set the X coordinates
-    LCD_WriteReg(0x2A);
-    LCD_WriteData_Byte((Xstart+20) >> 8);
-    LCD_WriteData_Byte(Xstart+20);
-    LCD_WriteData_Byte((Xend+20)>> 8);
-    LCD_WriteData_Byte(Xend+20);
-    
-    // set the Y coordinates
-    LCD_WriteReg(0x2B);
-    LCD_WriteData_Byte(Ystart >> 8);
-    LCD_WriteData_Byte(Ystart);
-    LCD_WriteData_Byte((Yend) >> 8);
-    LCD_WriteData_Byte(Yend);
-  }
-  else {
-    // set the X coordinates
-    LCD_WriteReg(0x2A);
-    LCD_WriteData_Byte(Xstart >> 8);
-    LCD_WriteData_Byte(Xstart);
-    LCD_WriteData_Byte((Xend) >> 8);
-    LCD_WriteData_Byte(Xend);
-    // set the Y coordinates
-    LCD_WriteReg(0x2B);
-    LCD_WriteData_Byte((Ystart+20)>> 8);
-    LCD_WriteData_Byte(Ystart+20);
-    LCD_WriteData_Byte((Yend+20)>> 8);
-    LCD_WriteData_Byte(Yend+20);
-  }
+    if (horizontal) {
+        // set the X coordinates
+        LCD_WriteReg(0x2A);
+        LCD_WriteData_Byte((Xstart+20) >> 8);
+        LCD_WriteData_Byte(Xstart+20);
+        LCD_WriteData_Byte((Xend+20)>> 8);
+        LCD_WriteData_Byte(Xend+20);
+        
+        // set the Y coordinates
+        LCD_WriteReg(0x2B);
+        LCD_WriteData_Byte(Ystart >> 8);
+        LCD_WriteData_Byte(Ystart);
+        LCD_WriteData_Byte((Yend) >> 8);
+        LCD_WriteData_Byte(Yend);
+    }
+    else {
+        // set the X coordinates
+        LCD_WriteReg(0x2A);
+        LCD_WriteData_Byte(Xstart >> 8);
+        LCD_WriteData_Byte(Xstart);
+        LCD_WriteData_Byte((Xend) >> 8);
+        LCD_WriteData_Byte(Xend);
+        // set the Y coordinates
+        LCD_WriteReg(0x2B);
+        LCD_WriteData_Byte((Ystart+20)>> 8);
+        LCD_WriteData_Byte(Ystart+20);
+        LCD_WriteData_Byte((Yend+20)>> 8);
+        LCD_WriteData_Byte(Yend+20);
+    }
 
-  LCD_WriteReg(0X2C);
+    LCD_WriteReg(0X2C);
 }
 
 /******************************************************************************
@@ -215,16 +215,60 @@ parameter :
     Color :   The color you want to clear all the screen
 ******************************************************************************/
 void st7789v2::LCD_Clear(uint16_t Color) {
-  uint16_t i,j;    
-  LCD_SetCursor(0, 0, LCD_WIDTH, LCD_HEIGHT);
-  for(i=0; i < LCD_WIDTH; i++) {
-    for(j=0; j < LCD_HEIGHT; j++) {
-      LCD_WriteData_Word(Color);
+    uint16_t i,j;
+    LCD_SetCursor(0, 0, LCD_WIDTH, LCD_HEIGHT);
+    for(i=0; i < LCD_WIDTH; i++) {
+        for(j=0; j < LCD_HEIGHT; j++) {
+          LCD_WriteData_Word(Color);
+        }
     }
-  }
 }
 
+/******************************************************************************
+function: Refresh a certain area to the same color
+parameter :
+    Xstart:   Start uint16_t x coordinate
+    Ystart:   Start uint16_t y coordinate
+    Xend  :   End uint16_t coordinates
+    Yend  :   End uint16_t coordinates
+    color :   Set the color
+******************************************************************************/
+void st7789v2::LCD_ClearWindow(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t color)
+{
+    uint16_t i,j;
+    LCD_SetCursor(Xstart, Ystart, Xend, Yend);
+    for(i=Ystart; i<Yend; i++) {                                
+        for(j=Xstart; j<Xend; j++) {
+            LCD_WriteData_Word(color);
+        }
+    }
+}
 
+/******************************************************************************
+function: Set the color of an area
+parameter :
+    Xstart:   Start uint16_t x coordinate
+    Ystart:   Start uint16_t y coordinate
+    Xend  :   End uint16_t coordinates
+    Yend  :   End uint16_t coordinates
+    Color :   Set the color
+******************************************************************************/
+void st7789v2::LCD_SetWindowColor(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t Color) {
+    LCD_SetCursor(Xstart, Ystart, Xend, Yend);
+    LCD_WriteData_Word(Color);
+}
+
+/******************************************************************************
+function: Draw a uint16_t
+parameter :
+    X     :   Set the X coordinate
+    Y     :   Set the Y coordinate
+    Color :   Set the color
+******************************************************************************/
+void st7789v2::LCD_SetUWORD(uint16_t x, uint16_t y, uint16_t Color) {
+    LCD_SetCursor(x,y,x,y);
+    LCD_WriteData_Word(Color);
+} 
 
 
 
