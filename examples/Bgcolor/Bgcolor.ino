@@ -7,7 +7,7 @@ void setup() {
   // put your setup code here, to run once:
   lcd.Init();
   lcd.SetBacklight(100);
-  lcd.Clear(0xF800);
+  lcd.Clear(RED);
 }
 
 void loop() {
