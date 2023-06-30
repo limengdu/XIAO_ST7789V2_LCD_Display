@@ -40,19 +40,19 @@ class st7789v2{
     protected:
         uint8_t spi_cs, spi_dc, spi_rst, spi_bl;
     private:
-        void LCD_WriteReg(uint8_t data);
-        void LCD_WriteData_Byte(uint8_t data);
-        void LCD_WriteData_Word(uint16_t data);
+        void WriteReg(uint8_t data);
+        void WriteData_Byte(uint8_t data);
+        void WriteData_Word(uint16_t data);
     public:
         bool horizontal = false;
-        void LCD_Init(uint8_t cs = CS_PIN, uint8_t dc = DC_PIN, uint8_t rst = RST_PIN, uint8_t bl = BL_PIN);
-        void LCD_SetBacklight(uint16_t Value);
-        void LCD_Reset(void);
-        void LCD_SetCursor(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend);
-        void LCD_Clear(uint16_t Color);
-        void LCD_ClearWindow(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t color);
-        void LCD_SetWindowColor(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t Color);
-        void LCD_SetUWORD(uint16_t x, uint16_t y, uint16_t Color);
+        void Init(uint8_t cs = CS_PIN, uint8_t dc = DC_PIN, uint8_t rst = RST_PIN, uint8_t bl = BL_PIN);
+        void SetBacklight(uint16_t Value);
+        void Reset(void);
+        void SetCursor(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend);
+        void Clear(uint16_t Color);
+        void ClearWindow(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t color);
+        void SetWindowColor(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t Color);
+        void SetUWORD(uint16_t x, uint16_t y, uint16_t Color);
 
 };
 
