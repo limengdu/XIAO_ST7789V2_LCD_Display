@@ -4,11 +4,16 @@
 #include <Arduino.h>
 #include "stdio.h"
 #include "fonts.h"
+#include <SPI.h>
 
-#define RST_PIN 1     // D0
-#define DC_PIN  2     // D1
-#define BL_PIN  3     // D2
-#define CS_PIN  4     // D3
+#if defined(ARDUINO_SEEED_XIAO_NRF52840_SENSE) || defined(ARDUINO_SEEED_XIAO_NRF52840)
+#include <avr/dtostrf.h>
+#endif
+
+#define RST_PIN D0
+#define DC_PIN  D3
+#define BL_PIN  D6
+#define CS_PIN  D1
 
 #define LCD_WIDTH   240 //LCD width
 #define LCD_HEIGHT  280 //LCD height

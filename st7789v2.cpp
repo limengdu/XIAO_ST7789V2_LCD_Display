@@ -7,10 +7,10 @@ function:
 ******************************************************************************/
 void st7789v2::Init(uint8_t cs, uint8_t dc, uint8_t rst, uint8_t bl){
 
-    spi_cs = cs;
-    spi_dc = dc;
-    spi_rst = rst;
-    spi_bl = bl;
+    this->spi_cs = cs;
+    this->spi_dc = dc;
+    this->spi_rst = rst;
+    this->spi_bl = bl;
 
     pinMode(spi_cs, OUTPUT);
     pinMode(spi_rst, OUTPUT);
@@ -18,10 +18,16 @@ void st7789v2::Init(uint8_t cs, uint8_t dc, uint8_t rst, uint8_t bl){
     pinMode(spi_bl, OUTPUT);
     analogWrite(spi_bl, 140);
 
+#if defined(CONFIG_IDF_TARGET_ESP32S3) || defined(CONFIG_IDF_TARGET_ESP32C3)
     SPI.setDataMode(SPI_MODE3);
     SPI.setBitOrder(MSBFIRST);
     SPI.setClockDivider(SPI_CLOCK_DIV2);
     SPI.begin();
+#elif defined(ARDUINO_Seeed_XIAO_nRF52840_Sense) || defined(ARDUINO_Seeed_XIAO_nRF52840)
+    #error "If you want to use the XIAO nRF52840, select the model number under the seeed nRF52 mbed-enabled Board!"
+#else
+    SPI.begin();
+#endif
 
     Reset();
 
