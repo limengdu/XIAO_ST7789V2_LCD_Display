@@ -6,7 +6,7 @@
 | GND | GND |
 | DIN | D10 |
 | CLK | D8 |
-| CS | D3 |
-| DC | D1 |
+| CS | D1 |
+| DC | D3 |
 | RST | D0 |
-| BL | D2 |
+| BL | D6 |
